@@ -1,4 +1,7 @@
-# devOpsAppQuiz
+# devOpsAppQuiz - Grupo 3
+* Andrés Rodríguez
+* Jhon Sepulveda
+* Eidher Cadavid
 
 [5%] Realizar un fork del proyecto, y agregar miembros del team aca en el encabezado
 

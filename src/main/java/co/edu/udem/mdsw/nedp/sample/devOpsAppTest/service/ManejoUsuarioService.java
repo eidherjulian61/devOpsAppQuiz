@@ -1,7 +1,6 @@
 package co.edu.udem.mdsw.nedp.sample.devOpsAppTest.service;
 
 import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.UsuarioDto;
-import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.UsuariosList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,9 +32,10 @@ public class ManejoUsuarioService implements ManejoUsuarioServiceInt{
     @Override
     public List<UsuarioDto> getUsuarios(){
         String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/";
-        UsuariosList usuariosList = restTemplate.getForObject(
-                url, UsuariosList.class);
-        return usuariosList != null ? usuariosList.getUsuarioList() : null;
+        UsuarioDto[] arr =  restTemplate.getForObject(
+                url, UsuarioDto[].class);
+        List<UsuarioDto> list = Arrays.asList(arr);
+        return list != null ? list : null;
     }
 
     @Override

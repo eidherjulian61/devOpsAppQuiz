@@ -1,7 +1,7 @@
 package co.edu.udem.mdsw.nedp.sample.devOpsAppTest.service;
 
 import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.UsuarioDto;
-import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.utils.UsuariosList;
+import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.UsuariosList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,33 +22,34 @@ public class ManejoUsuarioService implements ManejoUsuarioServiceInt{
          this.restTemplate = restTemplate;
     }
 
+    @Override
     public UsuarioDto getUsuario(Integer id){
-        String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/"+ Integer.toString(id);
-        UsuarioDto usuario = restTemplate.getForObject(
+        String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/"+ id;
+        return restTemplate.getForObject(
                 url, UsuarioDto.class);
-        return usuario;
     }
 
+    @Override
     public List<UsuarioDto> getUsuarios(){
         String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/";
         UsuariosList usuariosList = restTemplate.getForObject(
                 url, UsuariosList.class);
-        return usuariosList.getUsuarioList();
+        return usuariosList != null ? usuariosList.getUsuarioList() : null;
     }
 
-    public UsuarioDto saveUsuarios(UsuarioDto usuario)   throws IOException {
+    @Override
+    public UsuarioDto saveUsuarios(UsuarioDto usuario) {
         String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<UsuarioDto> entity = new HttpEntity<>(usuario,headers);
 
-        UsuarioDto usuarioDto = restTemplate.postForObject(url, entity, UsuarioDto.class);
-        return usuarioDto;
+        return restTemplate.postForObject(url, entity, UsuarioDto.class);
     }
 
-
-    public UsuarioDto updateUsuario(UsuarioDto usuarioDto ) throws IOException {
+    @Override
+    public UsuarioDto updateUsuario(Integer id, UsuarioDto usuarioDto ) {
         String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -58,9 +58,10 @@ public class ManejoUsuarioService implements ManejoUsuarioServiceInt{
         return usuarioDto;
     }
 
-    public UsuarioDto deleteUsuario(Integer id) throws IOException {
+    @Override
+    public UsuarioDto deleteUsuario(Integer id) {
         UsuarioDto usuarioDto = this.getUsuario(id);
-        String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/"+ Integer.toString(id);
+        String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/"+ id;
         restTemplate.delete(url);
         return usuarioDto;
     }

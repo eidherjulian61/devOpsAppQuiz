@@ -1,6 +1,5 @@
-package co.edu.udem.mdsw.nedp.sample.devOpsAppTest.utils;
+package co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities;
 
-import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.UsuarioDto;
 import lombok.Data;
 
 import java.util.ArrayList;

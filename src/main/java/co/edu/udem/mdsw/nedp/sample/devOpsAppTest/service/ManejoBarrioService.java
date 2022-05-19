@@ -1,7 +1,6 @@
 package co.edu.udem.mdsw.nedp.sample.devOpsAppTest.service;
 
 import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.BarrioDto;
-import co.edu.udem.mdsw.nedp.sample.devOpsAppTest.entities.BarriosList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,9 +31,9 @@ public class ManejoBarrioService implements ManejoBarrioServiceInt {
     @Override
     public List<BarrioDto> getBarrios(){
         String url = "https://62858c6e96bccbf32d64835a.mockapi.io/barrios/";
-        BarriosList barriosList = restTemplate.getForObject(
-                url, BarriosList.class);
-        return barriosList != null ? barriosList.getBarriosList() : null;
+        BarrioDto[] arr =  restTemplate.getForObject(
+                url, BarrioDto[].class);
+        return Arrays.asList(arr != null ? arr : new BarrioDto[0]);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ManejoBarrioService implements ManejoBarrioServiceInt {
 
     @Override
     public BarrioDto updateBarrio(Integer id, BarrioDto barrioDto ) {
-        String url = "https://62858c6e96bccbf32d64835a.mockapi.io/barrios/";
+        String url = "https://62858c6e96bccbf32d64835a.mockapi.io/barrios/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<BarrioDto> entity = new HttpEntity<>(barrioDto,headers);

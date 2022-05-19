@@ -34,8 +34,7 @@ public class ManejoUsuarioService implements ManejoUsuarioServiceInt{
         String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/";
         UsuarioDto[] arr =  restTemplate.getForObject(
                 url, UsuarioDto[].class);
-        List<UsuarioDto> list = Arrays.asList(arr);
-        return list != null ? list : null;
+        return Arrays.asList(arr != null ? arr : new UsuarioDto[0]);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class ManejoUsuarioService implements ManejoUsuarioServiceInt{
 
     @Override
     public UsuarioDto updateUsuario(Integer id, UsuarioDto usuarioDto ) {
-        String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/";
+        String url = "https://6285638196bccbf32d622180.mockapi.io/api/v1/users/" + id;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UsuarioDto> entity = new HttpEntity<>(usuarioDto,headers);
